@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/movie-remote" />
             <option value="$PROJECT_DIR$/data/movie-repository" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/movie-domain" />
           </set>
         </option>
       </GradleProjectSettings>

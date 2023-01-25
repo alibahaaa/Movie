@@ -16,3 +16,4 @@ rootProject.name = "Movie"
 include ':app'
 include 'data:movie-remote'
 include 'data:movie-repository'
+include 'domain:movie-domain'
