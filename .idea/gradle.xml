@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/movie-remote" />
+            <option value="$PROJECT_DIR$/data/movie-repository" />
           </set>
         </option>
       </GradleProjectSettings>
