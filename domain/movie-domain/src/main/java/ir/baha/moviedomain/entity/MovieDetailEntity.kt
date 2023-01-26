@@ -2,7 +2,7 @@ package ir.baha.moviedomain.entity
 
 data class MovieDetailEntity(
     val backdrop_path: String,
-    val genres: List<Genre>,
+    val genres: List<GenreEntity>,
     val id: Int,
     val original_language: String,
     val original_title: String,
@@ -13,7 +13,7 @@ data class MovieDetailEntity(
     val vote_count: Int
 )
 
-data class Genre(
+data class GenreEntity(
     val id: Int,
     val name: String
 )
