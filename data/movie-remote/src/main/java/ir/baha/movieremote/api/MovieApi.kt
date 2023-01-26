@@ -20,7 +20,7 @@ interface MovieApi {
     @GET("/movie/{movie_id}")
     suspend fun getMovieDetail(
         @Path("movie_id")
-        movie_id: String,
+        movie_id: Int,
         @Query("api_key")
         apiKey: String = API_KEY
     ): Response<MovieDetailResponseEntity?>
