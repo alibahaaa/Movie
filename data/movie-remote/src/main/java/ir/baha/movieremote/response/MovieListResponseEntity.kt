@@ -11,7 +11,7 @@ data class MovieListResponseEntity(
 )
 
 data class MovieResponseEntity(
-    @SerializedName("page")
+    @SerializedName("id")
     val id: Int,
 
     @SerializedName("title")
