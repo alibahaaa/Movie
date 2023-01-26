@@ -1,4 +1,4 @@
-package ir.baha.designsystem
+package ir.baha.designsystem.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
