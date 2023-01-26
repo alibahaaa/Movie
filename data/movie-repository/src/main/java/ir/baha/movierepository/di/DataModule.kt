@@ -4,10 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ir.baha.moviedomain.repository.MovieDetailRepository
-import ir.baha.moviedomain.repository.MovieListRepository
-import ir.baha.movierepository.repository.MovieDetailRepositoryImpl
-import ir.baha.movierepository.repository.MovieListRepositoryImpl
+import ir.baha.moviedomain.repository.MovieRepository
+import ir.baha.movierepository.repository.MovieRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -15,12 +13,7 @@ interface DataModule {
 
     @Binds
     fun bindMovieListRepository(
-        movieListRepositoryImpl: MovieListRepositoryImpl
-    ): MovieListRepository
-
-    @Binds
-    fun bindMovieDetailRepository(
-        movieDetailRepositoryImpl: MovieDetailRepositoryImpl
-    ): MovieDetailRepository
+        movieRepositoryImpl: MovieRepositoryImpl
+    ): MovieRepository
 
 }
