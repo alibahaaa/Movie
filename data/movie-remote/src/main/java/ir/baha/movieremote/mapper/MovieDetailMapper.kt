@@ -8,11 +8,11 @@ import ir.baha.movieremote.response.MovieDetailResponseEntity
 fun MovieDetailResponseEntity.toMovieDetail(): MovieDetailEntity = MovieDetailEntity(
     original_language = original_language,
     id = id,
-    backdrop_path = backdrop_path,
+    backdrop_path = "https://image.tmdb.org/t/p/w500/$backdrop_path",
     genres = genres.map { it.toGenreEntity() },
     original_title = original_title,
     overview = overview,
-    poster_path = poster_path,
+    poster_path = "https://image.tmdb.org/t/p/w500/$poster_path",
     release_date = release_date,
     vote_average = vote_average,
     vote_count = vote_count
