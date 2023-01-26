@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/feature/movie-detail" />
             <option value="$PROJECT_DIR$/feature/movie-list" />
             <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/library/design-system" />
             <option value="$PROJECT_DIR$/library/navigation" />
           </set>
         </option>
