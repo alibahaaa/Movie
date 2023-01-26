@@ -13,16 +13,10 @@ class MovieRepositoryImpl @Inject constructor(
     private val api: MovieApi
 ) : MovieRepository {
 
-    private var page: Int = 1
-
-    override suspend fun getMovieList(): Resource<List<MovieEntity>> = try {
-        Resource.Loading(null)
-
+    override suspend fun getMovieList(page: Int): Resource<List<MovieEntity>> = try {
         val response = api.getMovies(page = page)
 
         if (response.isSuccessful) {
-            page = response.body()?.page?.plus(1) ?: (page + 1)
-
             Resource.Success(
                 response.body()?.results?.map { it.toMovieEntity() } ?: listOf()
             )

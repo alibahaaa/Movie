@@ -3,30 +3,30 @@ package ir.baha.moviedetail.vm
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.baha.designsystem.base.BaseViewModel
-import ir.baha.moviedomain.entity.MovieEntity
+import ir.baha.moviedomain.entity.MovieDetailEntity
 import ir.baha.moviedomain.entity.Resource
-import ir.baha.moviedomain.usecase.GetMovieListUseCase
+import ir.baha.moviedomain.usecase.GetMovieDetailUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
-    val getMovieListUseCase: GetMovieListUseCase
-) : BaseViewModel<MovieListIntent, MovieListAction, MovieListState>() {
+    val getMovieDetailUseCase: GetMovieDetailUseCase
+) : BaseViewModel<MovieDetailIntent, MovieDetailAction, MovieDetailState>() {
 
-    override fun createInitialState(): MovieListState = MovieListState.Loading
+    override fun createInitialState(): MovieDetailState = MovieDetailState.Idle
 
-    override fun handleIntent(intent: MovieListIntent): MovieListAction = when (intent) {
-        MovieListIntent.GetMovieList -> MovieListAction.MovieList
+    override fun handleIntent(intent: MovieDetailIntent): MovieDetailAction = when (intent) {
+        is MovieDetailIntent.GetMovieDetail -> MovieDetailAction.Movie(intent.movieId)
     }
 
-    override fun handleAction(action: MovieListAction) {
+    override fun handleAction(action: MovieDetailAction) {
         when (action) {
-            MovieListAction.MovieList -> viewModelScope.launch {
-                when (val response = getMovieListUseCase()) {
-                    is Resource.Error -> setState { MovieListState.Error(response.exception?.message) }
-                    is Resource.Loading -> setState { MovieListState.Loading }
-                    is Resource.Success -> setState { MovieListState.ShowMovieList(response.data) }
+            is MovieDetailAction.Movie -> viewModelScope.launch {
+                setState { MovieDetailState.Loading }
+                when (val response = getMovieDetailUseCase(action.movieId)) {
+                    is Resource.Error -> setState { MovieDetailState.Error(response.exception?.message) }
+                    is Resource.Success -> setState { MovieDetailState.ShowMovieList(response.data) }
                 }
             }
         }
@@ -35,16 +35,17 @@ class MovieDetailViewModel @Inject constructor(
 }
 
 
-sealed class MovieListIntent {
-    object GetMovieList : MovieListIntent()
+sealed class MovieDetailIntent {
+    class GetMovieDetail(val movieId: Int) : MovieDetailIntent()
 }
 
-sealed class MovieListAction {
-    object MovieList : MovieListAction()
+sealed class MovieDetailAction {
+    class Movie(val movieId: Int) : MovieDetailAction()
 }
 
-sealed class MovieListState {
-    object Loading : MovieListState()
-    data class ShowMovieList(val movies: List<MovieEntity>?) : MovieListState()
-    data class Error(val error: String?) : MovieListState()
+sealed class MovieDetailState {
+    object Idle : MovieDetailState()
+    object Loading : MovieDetailState()
+    data class ShowMovieList(val movie: MovieDetailEntity?) : MovieDetailState()
+    data class Error(val error: String?) : MovieDetailState()
 }

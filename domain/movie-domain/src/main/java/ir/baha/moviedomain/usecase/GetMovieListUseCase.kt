@@ -9,6 +9,6 @@ class GetMovieListUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
 
-    suspend operator fun invoke(): Resource<List<MovieEntity>> = repository.getMovieList()
+    suspend operator fun invoke(page: Int): Resource<List<MovieEntity>> = repository.getMovieList(page)
 
 }
