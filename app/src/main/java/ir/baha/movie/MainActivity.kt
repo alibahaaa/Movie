@@ -3,14 +3,12 @@ package ir.baha.movie
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ir.baha.movie.navigation.MovieNavHost
 import ir.baha.movie.ui.theme.MovieTheme
 
 @AndroidEntryPoint
@@ -19,27 +17,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MovieTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
+                val navController = rememberNavController()
+                Scaffold { paddingValues ->
+                    MovieNavHost(
+                        navController = navController,
+                        modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MovieTheme {
-        Greeting("Android")
     }
 }
