@@ -5,6 +5,6 @@ import ir.baha.moviedomain.entity.Resource
 
 interface MovieDetailRepository {
 
-    suspend fun getMovieDetail(): Resource<MovieDetailEntity>
+    suspend fun getMovieDetail(movieId: Int): Resource<MovieDetailEntity>
 
 }
