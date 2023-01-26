@@ -1,4 +1,4 @@
-package ir.baha.navigation
+package ir.baha.navigation.destination
 
 sealed class Destinations(val route: String) {
     object MovieListScreen : Destinations("movie_list_screen")
