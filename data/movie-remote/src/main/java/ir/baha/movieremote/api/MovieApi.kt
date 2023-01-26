@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface MovieApi {
 
-    @GET("/movie/popular")
+    @GET("movie/popular")
     suspend fun getMovies(
         @Query("api_key")
         apiKey: String = API_KEY,
@@ -17,7 +17,7 @@ interface MovieApi {
         page: Int
     ): Response<MovieListResponseEntity?>
 
-    @GET("/movie/{movie_id}")
+    @GET("movie/{movie_id}")
     suspend fun getMovieDetail(
         @Path("movie_id")
         movie_id: Int,
@@ -28,4 +28,4 @@ interface MovieApi {
 }
 
 internal const val API_KEY = "55957fcf3ba81b137f8fc01ac5a31fb5"
-internal const val BASE_URL = "https://api.themoviedb.org/3"
+internal const val BASE_URL = "https://api.themoviedb.org/3/"
