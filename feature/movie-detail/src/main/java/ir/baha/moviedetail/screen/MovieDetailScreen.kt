@@ -10,10 +10,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -25,6 +22,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,16 +37,18 @@ fun MovieDetailScreen(
     movieId: Int,
     onPop: () -> Unit,
 ) {
-    val uiState = viewModel
-        .uiState
-        .collectAsState()
-        .value
+    Scaffold { padding ->
+        val uiState = viewModel
+            .uiState
+            .collectAsState()
+            .value
 
-    when (uiState) {
-        MovieDetailState.Idle -> viewModel.sendIntent(MovieDetailIntent.GetMovieDetail(movieId))
-        MovieDetailState.Loading -> DetailLoadingView()
-        is MovieDetailState.Error -> Text(text = "ERROR: ${uiState.error}")
-        is MovieDetailState.ShowMovieList -> MovieDetailView(uiState.movie!!, onPop)
+        when (uiState) {
+            MovieDetailState.Idle -> viewModel.sendIntent(MovieDetailIntent.GetMovieDetail(movieId))
+            MovieDetailState.Loading -> DetailLoadingView()
+            is MovieDetailState.Error -> Text(text = "ERROR: ${uiState.error}")
+            is MovieDetailState.ShowMovieList -> MovieDetailView(uiState.movie!!, onPop, padding)
+        }
     }
 }
 
@@ -68,8 +68,11 @@ fun DetailLoadingView() {
 fun MovieDetailView(
     movie: MovieDetailEntity,
     onPop: () -> Unit,
+    padding: PaddingValues,
 ) {
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.padding(padding)
+    ) {
         item {
             Box(
                 modifier = Modifier
@@ -106,11 +109,16 @@ fun MovieDetailView(
                     Column {
                         Text(
                             text = movie.original_title,
-                            modifier = Modifier.padding(top = 60.dp, start = 12.dp)
+                            modifier = Modifier.padding(top = 60.dp, start = 12.dp),
+                            style = TextStyle(
+                                color = Color.Black,
+                                fontWeight = FontWeight.Bold
+                            )
                         )
 
                         LazyHorizontalGrid(
-                            rows = GridCells.Fixed(2)
+                            rows = GridCells.Fixed(2),
+                            modifier = Modifier.padding(start = 8.dp),
                         ) {
                             items(movie.genres) { genre ->
                                 Card(
@@ -222,9 +230,10 @@ fun MovieDetailView(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = movie.vote_count.toString(),
+                        text = "${movie.vote_count} votes",
                         style = TextStyle(
-                            fontSize = 12.sp
+                            fontSize = 12.sp,
+                            color = Color.Gray
                         )
                     )
                 }
@@ -257,7 +266,8 @@ fun MovieDetailView(
                     Text(
                         text = stringResource(R.string.language),
                         style = TextStyle(
-                            fontSize = 12.sp
+                            fontSize = 12.sp,
+                            color = Color.Gray
                         )
                     )
                 }
@@ -290,7 +300,8 @@ fun MovieDetailView(
                     Text(
                         text = stringResource(R.string.release_date),
                         style = TextStyle(
-                            fontSize = 12.sp
+                            fontSize = 12.sp,
+                            color = Color.Gray
                         )
                     )
                 }
@@ -319,6 +330,9 @@ fun MovieDetailView(
         item {
             Text(
                 text = movie.overview,
+                style = TextStyle(
+                    color = Color.Gray
+                ),
                 modifier = Modifier.padding(horizontal = 12.dp)
             )
         }
