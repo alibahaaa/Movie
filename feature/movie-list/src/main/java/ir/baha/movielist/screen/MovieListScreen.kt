@@ -59,7 +59,7 @@ fun MovieListScreen(
                 }
 
                 when (movies.loadState.append) {
-                    is LoadState.NotLoading -> Unit
+                    is LoadState.NotLoading -> items(10) { MovieListLoadingView() }
                     LoadState.Loading -> {
                         items(10) { MovieListLoadingView() }
                     }
