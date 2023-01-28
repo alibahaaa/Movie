@@ -1,5 +1,5 @@
 # Movie
 
 #### Architecture
-![Movie](images/arch.jpg "Movie")
+![Movie](image/arch.jpg "Movie")
 
