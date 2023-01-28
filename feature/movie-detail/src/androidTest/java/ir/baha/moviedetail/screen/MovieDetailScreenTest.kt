@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Rule
 import org.junit.Test
 
-
 class MovieDetailScreenTest {
 
     @get:Rule
@@ -28,7 +27,7 @@ class MovieDetailScreenTest {
 
         // Act
         composeTestRule.setContent {
-            MovieDetailScreen(viewModel = viewModel, 1)
+            MovieDetailScreen(viewModel = viewModel, 1) { }
         }
 
         composeTestRule.onNodeWithTag("loading_tag").assertIsDisplayed()
@@ -56,7 +55,7 @@ class MovieDetailScreenTest {
 
         // Act
         composeTestRule.setContent {
-            MovieDetailScreen(viewModel = viewModel, 1)
+            MovieDetailScreen(viewModel = viewModel, 1) { }
         }
 
         // Assert
@@ -74,7 +73,7 @@ class MovieDetailScreenTest {
 
         // Act
         composeTestRule.setContent {
-            MovieDetailScreen(viewModel = viewModel, 1)
+            MovieDetailScreen(viewModel = viewModel, 1) { }
         }
 
         // Assert

@@ -3,6 +3,7 @@ package ir.baha.moviedetail.screen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
@@ -34,7 +36,8 @@ import ir.baha.moviedomain.entity.MovieDetailEntity
 @Composable
 fun MovieDetailScreen(
     viewModel: MovieDetailViewModel = hiltViewModel(),
-    movieId: Int
+    movieId: Int,
+    onPop: () -> Unit,
 ) {
     val uiState = viewModel
         .uiState
@@ -45,7 +48,7 @@ fun MovieDetailScreen(
         MovieDetailState.Idle -> viewModel.sendIntent(MovieDetailIntent.GetMovieDetail(movieId))
         MovieDetailState.Loading -> DetailLoadingView()
         is MovieDetailState.Error -> Text(text = "ERROR: ${uiState.error}")
-        is MovieDetailState.ShowMovieList -> MovieDetailView(uiState.movie!!)
+        is MovieDetailState.ShowMovieList -> MovieDetailView(uiState.movie!!, onPop)
     }
 }
 
@@ -62,7 +65,10 @@ fun DetailLoadingView() {
 }
 
 @Composable
-fun MovieDetailView(movie: MovieDetailEntity) {
+fun MovieDetailView(
+    movie: MovieDetailEntity,
+    onPop: () -> Unit,
+) {
     LazyColumn {
         item {
             Box(
@@ -93,7 +99,8 @@ fun MovieDetailView(movie: MovieDetailEntity) {
                         modifier = Modifier
                             .padding(start = 20.dp)
                             .width(100.dp)
-                            .height(150.dp),
+                            .height(150.dp)
+                            .clip(RoundedCornerShape(4.dp)),
                     )
 
                     Column {
@@ -146,7 +153,8 @@ fun MovieDetailView(movie: MovieDetailEntity) {
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .size(24.dp),
+                            .size(24.dp)
+                            .clickable { onPop() },
                         alignment = Alignment.Center
                     )
                     Row {

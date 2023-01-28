@@ -13,6 +13,6 @@ fun NavGraphBuilder.movieDetailGraph(
 ) {
     composable(Destinations.MovieDetailScreen().route) { entry ->
         val movie = entry.parcelableData<MovieEntity>(Destinations.MovieDetailScreen().movie)
-        MovieDetailScreen(movieId = movie?.id ?: 0)
+        MovieDetailScreen(movieId = movie?.id ?: 0, onPop = { navController.popBackStack() })
     }
 }
