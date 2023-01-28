@@ -14,5 +14,8 @@
 #### Technologies
 Compose, Compose Navigation, Hilt, Retrofit, Coil, Paging 3, mockk, junit
 
+#### APK
+https://github.com/alibahaaa/Movie/blob/master/app-debug.apk
+
 
 
