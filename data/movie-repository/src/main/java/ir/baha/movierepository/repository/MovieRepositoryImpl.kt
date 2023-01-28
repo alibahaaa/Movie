@@ -21,7 +21,7 @@ class MovieRepositoryImpl @Inject constructor(
                 response.body()?.results?.map { it.toMovieEntity() } ?: listOf()
             )
         } else {
-            Resource.Error(Exception(response.message() ?: "An unknown error occurred"))
+            Resource.Error(Exception(response.errorBody()?.string() ?: "An unknown error occurred"))
         }
 
     } catch (e: Exception) {
@@ -34,7 +34,7 @@ class MovieRepositoryImpl @Inject constructor(
         if (response.isSuccessful) {
             Resource.Success(response.body()?.toMovieDetail()!!)
         } else {
-            Resource.Error(Exception(response.message() ?: "An unknown error occurred"))
+            Resource.Error(Exception(response.errorBody()?.string() ?: "An unknown error occurred"))
         }
     } catch (e: Exception) {
         Resource.Error(e)
