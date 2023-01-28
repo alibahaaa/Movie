@@ -8,7 +8,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        minSdk 21
+        minSdk 26
         targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -55,4 +55,6 @@ dependencies {
     api "androidx.compose.material:material:$compose_ui_version"
     api "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
     api 'androidx.activity:activity-compose:1.4.0'
+
+    implementation 'com.valentinilk.shimmer:compose-shimmer:1.0.4'
 }

@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -41,7 +42,7 @@ fun MovieListScreen(
 
     when (uiState) {
         MovieListState.Idle -> viewModel.sendIntent(MovieListIntent.GetMovieList)
-        MovieListState.Loading -> CircularProgressIndicator()
+        MovieListState.Loading -> CircularProgressIndicator(modifier = Modifier.testTag("loading_tag"))
         is MovieListState.Pager -> {
             val movies = uiState.movies.collectAsLazyPagingItems()
 
@@ -59,7 +60,7 @@ fun MovieListScreen(
                 }
 
                 when (movies.loadState.append) {
-                    is LoadState.NotLoading -> items(10) { MovieListLoadingView() }
+                    is LoadState.NotLoading -> items(20) { MovieListLoadingView() }
                     LoadState.Loading -> {
                         items(10) { MovieListLoadingView() }
                     }

@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -35,7 +36,6 @@ fun MovieDetailScreen(
     viewModel: MovieDetailViewModel = hiltViewModel(),
     movieId: Int
 ) {
-
     val uiState = viewModel
         .uiState
         .collectAsState()
@@ -43,11 +43,22 @@ fun MovieDetailScreen(
 
     when (uiState) {
         MovieDetailState.Idle -> viewModel.sendIntent(MovieDetailIntent.GetMovieDetail(movieId))
-        MovieDetailState.Loading -> CircularProgressIndicator(modifier = Modifier.size(50.dp))
+        MovieDetailState.Loading -> DetailLoadingView()
         is MovieDetailState.Error -> Text(text = "ERROR: ${uiState.error}")
         is MovieDetailState.ShowMovieList -> MovieDetailView(uiState.movie!!)
     }
+}
 
+@Composable
+fun DetailLoadingView() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag("loading_tag"),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(modifier = Modifier.size(50.dp))
+    }
 }
 
 @Composable
