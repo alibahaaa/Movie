@@ -27,6 +27,12 @@ jobs:
 
       - name: Package APK
         run: ./gradlew assembleDebug
+        
+      - name: Upload APK
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: app
+          path: app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload APK to GitHub Releases
         uses: actions/create-release@v1
@@ -38,4 +44,4 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/debug/app-debug.apk
